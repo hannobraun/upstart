@@ -34,7 +34,8 @@ function init() {
 		affectedByGravity: {
 			mass: 1
 		},
-		imagePath: "gfx/projectile.png"
+		imagePath: "gfx/projectile.png",
+		centeredOn: {}
 	} );
 	entityManager.defineEntity( "blackHole", {
 		position: new Vector( 300, 300 ),
@@ -72,6 +73,17 @@ function main() {
 
 	var positionsAndSpeeds = entityManager.componentsByType( [ "position", "speed" ] );
 	physicsSystem.integratePosition( positionsAndSpeeds.components[ "position" ], positionsAndSpeeds.components[ "speed" ] );
+	
+	var center = entityManager.componentsByType( [ "position", "centeredOn" ] ).components[ "position" ][ 0 ];
+	var size = 80;
+	zoomedViewport.position = {
+		x: center.x - size / 2,
+		y: center.y - size / 2
+	}
+	zoomedViewport.size = {
+		x: size,
+		y: size
+	}
 	
 	var positionsAndImages = entityManager.componentsByType( [ "position", "appearance" ] );
 	renderSystem.render( mainViewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "appearance" ] );
