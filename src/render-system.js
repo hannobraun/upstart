@@ -8,16 +8,16 @@ RenderSystem.prototype.render = function( viewport, positions, appearances ) {
 		viewport.saveState();
 		
 		var pos = positions[ i ];
-		var image = appearances[ i ].image;
+		var appearance = appearances[ i ];
 		
-		var x = pos.x - viewport.position.x;
-		var y = pos.y - viewport.position.y;
+		var x = pos.x - viewport.position.x + appearance.xOffset;
+		var y = pos.y - viewport.position.y + appearance.yOffset;
 		
 		var xScale = viewport.width / viewport.size.x;
 		var yScale = viewport.height / viewport.size.y;
 		viewport.scale( xScale, yScale );
 		
-		viewport.drawImage( image, x, y );
+		viewport.drawImage( appearance.image, x, y );
 		
 		viewport.restoreState();
 	}

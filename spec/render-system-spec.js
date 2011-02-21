@@ -7,7 +7,9 @@ describe( "RenderSystem", function() {
 	
 	var position = new Vector( 10, 10 );
 	var appearance = {
-		image: {}
+		image: {},
+		xOffset: 0,
+		yOffset: 0
 	}
 	
 	beforeEach( function() {
@@ -74,5 +76,15 @@ describe( "RenderSystem", function() {
 		expect( viewport.scale ).toHaveBeenCalledWith( 2, 4 );
 		expect( viewport.saveState ).toHaveBeenCalled();
 		expect( viewport.restoreState ).toHaveBeenCalled();
+	} );
+	
+	it( "should take the appearance's offset into account when drawing the image.", function() {
+		appearance.xOffset = 5;
+		appearance.yOffset = 5;
+		spyOn( viewport, "drawImage" );
+		
+		renderSystem.render( viewport, [ position ], [ appearance ] );
+		
+		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 15, 15 );
 	} );
 } );
