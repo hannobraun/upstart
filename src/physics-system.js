@@ -35,8 +35,7 @@ PhysicsSystem.prototype.integrateSpeed = function(
 			var addedSpeed = forceVector.dividedBy( m2 ).times( this.tick ).dividedBy( 1000 );
 			var newSpeed =  speed.plus( addedSpeed );
 			
-			speed.x = newSpeed.x;
-			speed.y = newSpeed.y;
+			speed.replaceWith( newSpeed );
 		}
 	}
 }
