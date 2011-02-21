@@ -3,7 +3,7 @@ var tick = 20;
 
 var entityManager = null;
 
-var camera = null;
+var viewport = null;
 
 var physicsSystem = null;
 var renderSystem = null;
@@ -13,7 +13,7 @@ var renderSystem = null;
 function init() {
 	entityManager = new EntityManager();
 	
-	camera = new Camera( "canvas" );
+	viewport = new Viewport( "canvas" );
 	
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
@@ -47,7 +47,7 @@ function main() {
 	physicsSystem.integratePosition( positionsAndSpeeds.components[ "position" ], positionsAndSpeeds.components[ "speed" ] );
 	
 	var positionsAndImages = entityManager.componentsByType( [ "position", "image" ] );
-	renderSystem.render( camera, positionsAndImages.components[ "position" ], positionsAndImages.components[ "image" ] );
+	renderSystem.render( viewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "image" ] );
 	
 	setTimeout( main, tick );
 }
