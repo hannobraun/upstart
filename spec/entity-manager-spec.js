@@ -68,10 +68,21 @@ describe( "EntityManager", function() {
 			}
 		} );
 		
-		var result = entityManager.componentsByType( [  "componentX", "componentY" ] );
+		var result = entityManager.componentsByType( [ "componentX", "componentY" ] );
 		
 		expect( result.entities ).toEqual( [ "entity1", "entity2" ] );
 		expect( result.components[ "componentX" ] ).toEqual( [ componentX1, componentX2 ] );
 		expect( result.components[ "componentY" ] ).toEqual( [ componentY1, componentY2 ] );
+	} );
+	
+	it( "should find a component, event though its value is 0.", function() {
+		entityManager.defineEntity( "entity3", {
+			numberComponent: 0
+		} );
+		
+		var result = entityManager.componentsByType( [ "numberComponent"  ] );
+		
+		expect( result.entities ).toEqual( [ "entity3" ] );
+		expect( result.components[ "numberComponent" ] ).toEqual( [ 0 ] );
 	} );
 } );

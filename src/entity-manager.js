@@ -31,7 +31,7 @@ EntityManager.prototype._findEntitiesWithTheseComponents = function( componentTy
 	return this.entities.filter( function( entity ) {
 		var hasAllComponents = true;
 		for ( var i = 0; i < componentTypes.length; i++ ) {
-			if ( !entity[ componentTypes[ i ] ] ) {
+			if ( entity[ componentTypes[ i ] ] == undefined ) {
 				hasAllComponents = false;
 			}
 		}
