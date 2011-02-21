@@ -1,5 +1,6 @@
 
 var tick = 20;
+var rotationSpeed = 1;
 
 var entityManager = null;
 
@@ -42,7 +43,8 @@ function init() {
 			scaleX: 0.25,
 			scaleY: 0.25
 		},
-		centeredOn: {}
+		centeredOn: {},
+		controlledByInput: {}
 	} );
 	entityManager.defineEntity( "blackHole", {
 		position: new Vector( 300, 300 ),
@@ -77,7 +79,18 @@ function init() {
 
 function main() {
 	var pressedKeys = inputSystem.getPressedKeys();
-	console.log( pressedKeys );
+	var controlledByInput = entityManager.componentsByType( [ "rotation", "controlledByInput" ] );
+	for ( var i = 0; i < controlledByInput.entities.length; i++ ) {
+		var rotation = controlledByInput.components[ "rotation" ][ i ];
+		var newRotation = rotation;
+		if ( pressedKeys.indexOf( 37 ) != -1 ) {
+			var newRotation = rotation - rotationSpeed * tick / 1000;
+		}
+		else if ( pressedKeys.indexOf( 39 ) != -1 ) {
+			var newRotation = rotation + rotationSpeed * tick / 1000;
+		}
+		entityManager.addComponentToEntity( "rotation", newRotation, controlledByInput.entities[ i ] );
+	}
 	
 	var positionAndGravitySource = entityManager.componentsByType( [ "position", "gravitySource" ] );
 	var positionAndSpeedAndAffectedByGravity = entityManager.componentsByType( [ "position", "speed", "affectedByGravity" ] );
