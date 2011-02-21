@@ -11,7 +11,10 @@ function Viewport( canvasId ) {
 		y: 0
 	};
 	
-	this.zoom = 1;
+	this.size = {
+		x: this.width,
+		y: this.height
+	}
 }
 
 Viewport.prototype.clear = function() {
