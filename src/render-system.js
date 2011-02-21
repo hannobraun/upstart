@@ -8,6 +8,9 @@ RenderSystem.prototype.render = function( viewport, positions, images ) {
 		var pos = positions[ i ];
 		var image = images[ i ];
 		
-		viewport.drawImage( image, pos.x, pos.y );		
+		var x = pos.x + viewport.position.x;
+		var y = pos.y + viewport.position.y;
+		
+		viewport.drawImage( image, x, y );		
 	}
 }
