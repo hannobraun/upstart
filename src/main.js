@@ -15,19 +15,30 @@ function init() {
 	
 	viewport = new Viewport( "canvas" );
 	viewport.position = {
-		x: 250,
-		y: 250
+		x: 200,
+		y: 200
 	}
 	viewport.size = {
-		x: 100,
-		y: 100
+		x: 200,
+		y: 200
 	}
 	
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
 	
+	entityManager.defineEntity( "projectile", {
+		position: new Vector( 250, 250 ),
+		speed: new Vector( 10, -10 ),
+		affectedByGravity: {
+			mass: 1
+		},
+		imagePath: "gfx/projectile.png"
+	} );
 	entityManager.defineEntity( "blackHole", {
 		position: new Vector( 268, 268 ),
+		gravitySource: {
+			mass: 100000000000000
+		},
 		imagePath: "gfx/black-hole.png"
 	} );
 	
