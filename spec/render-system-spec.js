@@ -55,7 +55,7 @@ describe( "RenderSystem", function() {
 		
 		renderSystem.render( viewport, [ position ], [ image ] );
 		
-		expect( viewport.drawImage ).toHaveBeenCalledWith( image, 15, 15 );
+		expect( viewport.drawImage ).toHaveBeenCalledWith( image, 5, 5 );
 	} );
 	
 	it( "should scale an image before drawing it, if the viewport's size is smaller than then canvas it's rendered on.", function() {
