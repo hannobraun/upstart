@@ -6,9 +6,9 @@ function Viewport( canvasId ) {
 	this.width = this._canvas.width;
 	this.height = this._canvas.height;
 	
-	this.center = {
-		x: this._canvas.width / 2,
-		y: this._canvas.height / 2
+	this.position = {
+		x: 0,
+		y: 0
 	};
 	
 	this.zoom = 1;
