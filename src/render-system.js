@@ -13,11 +13,10 @@ RenderSystem.prototype.render = function( viewport, positions, images ) {
 		var y = pos.y - viewport.position.y;
 		
 		var xScale = viewport.size.x / viewport.width;
-		var yScale = viewport.size.y / viewport.heigth;
+		var yScale = viewport.size.y / viewport.height;
 		viewport.scale( xScale, yScale );
 		
-		viewport.drawImage( image, x, y );		
+		viewport.drawImage( image, x, y );
+		viewport.restoreState();		
 	}
-	
-	viewport.restoreState();
 }

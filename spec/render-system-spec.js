@@ -13,7 +13,7 @@ describe( "RenderSystem", function() {
 		
 		viewport = {
 			width: 100,
-			heigth: 100,
+			height: 100,
 			position: {
 				x: 0,
 				y: 0
