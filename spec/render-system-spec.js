@@ -60,8 +60,8 @@ describe( "RenderSystem", function() {
 	
 	it( "should scale an image before drawing it, if the viewport's size is smaller than then canvas it's rendered on.", function() {
 		viewport.size = {
-			x: 200,
-			y: 300
+			x: 50,
+			y: 25
 		};
 		spyOn( viewport, "saveState" );
 		spyOn( viewport, "restoreState" );
@@ -69,7 +69,7 @@ describe( "RenderSystem", function() {
 		
 		renderSystem.render( viewport, [ position ], [ image ] );
 		
-		expect( viewport.scale ).toHaveBeenCalledWith( 2, 3 );
+		expect( viewport.scale ).toHaveBeenCalledWith( 2, 4 );
 		expect( viewport.saveState ).toHaveBeenCalled();
 		expect( viewport.restoreState ).toHaveBeenCalled();
 	} );

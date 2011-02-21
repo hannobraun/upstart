@@ -12,8 +12,8 @@ RenderSystem.prototype.render = function( viewport, positions, images ) {
 		var x = pos.x - viewport.position.x;
 		var y = pos.y - viewport.position.y;
 		
-		var xScale = viewport.size.x / viewport.width;
-		var yScale = viewport.size.y / viewport.height;
+		var xScale = viewport.width / viewport.size.x;
+		var yScale = viewport.height / viewport.size.y;
 		viewport.scale( xScale, yScale );
 		
 		viewport.drawImage( image, x, y );
