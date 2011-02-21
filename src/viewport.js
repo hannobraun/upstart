@@ -24,3 +24,23 @@ Viewport.prototype.clear = function() {
 Viewport.prototype.drawImage = function( image, x, y ) {
 	this._context.drawImage( image, x, y );
 }
+
+Viewport.prototype.saveState = function() {
+	this._context.save();
+}
+
+Viewport.prototype.restoreState = function() {
+	this._context.restore();
+}
+
+Viewport.prototype.translate = function( x, y ) {
+	this._context.translate( x, y );
+}
+
+Viewport.prototype.rotate = function( angle ) {
+	this._context.rotate( angle );
+}
+
+Viewport.prototype.scale = function( x, y ) {
+	this._context.scale( x, y );
+}
