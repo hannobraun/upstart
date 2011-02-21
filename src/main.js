@@ -45,7 +45,10 @@ function init() {
 	var imagePaths = entityManager.componentsByType( [ "imagePath" ] );
 	loadImagesAndDo( imagePaths.components[ "imagePath" ], function( loadedImages ) {
 		for ( var i = 0; i < imagePaths.entities.length; i++ ) {
-			entityManager.addComponentToEntity( "image", loadedImages[ i ], imagePaths.entities[ i ] );
+			var appearance = {
+				image: loadedImages[ i ]
+			}
+			entityManager.addComponentToEntity( "appearance", appearance, imagePaths.entities[ i ] );
 		}
 		main();
 	} );
@@ -65,8 +68,8 @@ function main() {
 	var positionsAndSpeeds = entityManager.componentsByType( [ "position", "speed" ] );
 	physicsSystem.integratePosition( positionsAndSpeeds.components[ "position" ], positionsAndSpeeds.components[ "speed" ] );
 	
-	var positionsAndImages = entityManager.componentsByType( [ "position", "image" ] );
-	renderSystem.render( viewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "image" ] );
+	var positionsAndImages = entityManager.componentsByType( [ "position", "appearance" ] );
+	renderSystem.render( viewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "appearance" ] );
 	
 	setTimeout( main, tick );
 }

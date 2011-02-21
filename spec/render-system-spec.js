@@ -6,7 +6,9 @@ describe( "RenderSystem", function() {
 	var viewport = null;
 	
 	var position = new Vector( 10, 10 );
-	var image = {};
+	var appearance = {
+		image: {}
+	}
 	
 	beforeEach( function() {
 		renderSystem = new RenderSystem();
@@ -33,7 +35,7 @@ describe( "RenderSystem", function() {
 	it( "should clear the viewport before drawing anything.", function() {
 		spyOn( viewport, "clear" );
 		
-		renderSystem.render( viewport, [ position ], [ image ] );
+		renderSystem.render( viewport, [ position ], [ appearance ] );
 		
 		expect( viewport.clear ).toHaveBeenCalled();
 	} );
@@ -41,9 +43,9 @@ describe( "RenderSystem", function() {
 	it( "should draw an image unscaled and at its actual position, if the viewport has default values.", function() {
 		spyOn( viewport, "drawImage" );
 		
-		renderSystem.render( viewport, [ position ], [ image ] );
+		renderSystem.render( viewport, [ position ], [ appearance ] );
 		
-		expect( viewport.drawImage ).toHaveBeenCalledWith( image, 10, 10 );
+		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 10, 10 );
 	} );
 	
 	it( "should translate an image's position before drawing it, if the viewport's position isn't at the origin", function() {
@@ -53,9 +55,9 @@ describe( "RenderSystem", function() {
 		};
 		spyOn( viewport, "drawImage" );
 		
-		renderSystem.render( viewport, [ position ], [ image ] );
+		renderSystem.render( viewport, [ position ], [ appearance ] );
 		
-		expect( viewport.drawImage ).toHaveBeenCalledWith( image, 5, 5 );
+		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 5, 5 );
 	} );
 	
 	it( "should scale an image before drawing it, if the viewport's size is smaller than then canvas it's rendered on.", function() {
@@ -67,7 +69,7 @@ describe( "RenderSystem", function() {
 		spyOn( viewport, "restoreState" );
 		spyOn( viewport, "scale" );
 		
-		renderSystem.render( viewport, [ position ], [ image ] );
+		renderSystem.render( viewport, [ position ], [ appearance ] );
 		
 		expect( viewport.scale ).toHaveBeenCalledWith( 2, 4 );
 		expect( viewport.saveState ).toHaveBeenCalled();
