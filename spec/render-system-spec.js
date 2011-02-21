@@ -12,12 +12,21 @@ describe( "RenderSystem", function() {
 		renderSystem = new RenderSystem();
 		
 		viewport = {
+			width: 100,
+			heigth: 100,
 			position: {
 				x: 0,
 				y: 0
 			},
+			size: {
+				x: 100,
+				y: 100
+			},
 			clear: function() {},
-			drawImage: function() {}
+			drawImage: function() {},
+			saveState: function() {},
+			restoreState: function() {},
+			scale: function() {}
 		};
 	} );
 
@@ -47,5 +56,21 @@ describe( "RenderSystem", function() {
 		renderSystem.render( viewport, [ position ], [ image ] );
 		
 		expect( viewport.drawImage ).toHaveBeenCalledWith( image, 15, 15 );
+	} );
+	
+	it( "should scale an image before drawing it, if the viewport's size is smaller than then canvas it's rendered on.", function() {
+		viewport.size = {
+			x: 200,
+			y: 300
+		};
+		spyOn( viewport, "saveState" );
+		spyOn( viewport, "restoreState" );
+		spyOn( viewport, "scale" );
+		
+		renderSystem.render( viewport, [ position ], [ image ] );
+		
+		expect( viewport.scale ).toHaveBeenCalledWith( 2, 3 );
+		expect( viewport.saveState ).toHaveBeenCalled();
+		expect( viewport.restoreState ).toHaveBeenCalled();
 	} );
 } );
