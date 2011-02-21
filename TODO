@@ -2,3 +2,5 @@
 TODO
 
 * Find out how Jasmine generates debug output and override whatever's necessary to display vectors as (x, y).
+* Several places in the code use two variables xVar and yVar instead of a single vector. This should be changed.
+* The offset calculation should take scale into account.
