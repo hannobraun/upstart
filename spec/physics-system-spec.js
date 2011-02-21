@@ -9,18 +9,12 @@ describe( "PhysicsSystem", function() {
 	} );
 	
 	it( "should integrate the position according to the given tick.", function() {
-		var position = {
-			x: 0,
-			y: 0
-		};
-		var speed = {
-			x: 1000,
-			y: 1000
-		};
+		var position = new Vector( 0, 0 );
+		var speed = new Vector( 1000, 1000 );
 		
 		physicsSystem.integratePosition( [ position ], [ speed ] );
 		
-		expect( position ).toEqual( { x: 20, y: 20 } );
+		expect( position ).toEqual( new Vector( 20, 20 ) );
 	} );
 	
 	it( "should integrate the speed according to gravity.", function() {
