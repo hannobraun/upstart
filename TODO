@@ -1,0 +1,4 @@
+
+TODO
+
+* Find out how Jasmine generates debug output and override whatever's necessary to display vectors as (x, y).
