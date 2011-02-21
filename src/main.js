@@ -6,6 +6,7 @@ var entityManager = null;
 var mainViewport = null;
 var zoomedViewport = null;
 
+var inputSystem = null;
 var physicsSystem = null;
 var renderSystem = null;
 
@@ -25,6 +26,7 @@ function init() {
 		y: 100
 	}
 	
+	inputSystem = new InputSystem( [ 37, 39 ] );
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
 	
@@ -74,6 +76,9 @@ function init() {
 }
 
 function main() {
+	var pressedKeys = inputSystem.getPressedKeys();
+	console.log( pressedKeys );
+	
 	var positionAndGravitySource = entityManager.componentsByType( [ "position", "gravitySource" ] );
 	var positionAndSpeedAndAffectedByGravity = entityManager.componentsByType( [ "position", "speed", "affectedByGravity" ] );
 	physicsSystem.integrateSpeed(
