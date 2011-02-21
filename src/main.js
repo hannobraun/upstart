@@ -28,16 +28,16 @@ function init() {
 	
 	entityManager.defineEntity( "projectile", {
 		position: new Vector( 250, 250 ),
-		speed: new Vector( 10, -10 ),
+		speed: new Vector( 15, -15 ),
 		affectedByGravity: {
 			mass: 1
 		},
 		imagePath: "gfx/projectile.png"
 	} );
 	entityManager.defineEntity( "blackHole", {
-		position: new Vector( 268, 268 ),
+		position: new Vector( 300, 300 ),
 		gravitySource: {
-			mass: 100000000000000
+			mass: 1000000000000000
 		},
 		imagePath: "gfx/black-hole.png"
 	} );
@@ -45,8 +45,11 @@ function init() {
 	var imagePaths = entityManager.componentsByType( [ "imagePath" ] );
 	loadImagesAndDo( imagePaths.components[ "imagePath" ], function( loadedImages ) {
 		for ( var i = 0; i < imagePaths.entities.length; i++ ) {
+			var image = loadedImages[ i ];
 			var appearance = {
-				image: loadedImages[ i ]
+				image: image,
+				xOffset: -image.width / 2,
+				yOffset: -image.height / 2
 			}
 			entityManager.addComponentToEntity( "appearance", appearance, imagePaths.entities[ i ] );
 		}
