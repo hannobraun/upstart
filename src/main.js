@@ -14,6 +14,14 @@ function init() {
 	entityManager = new EntityManager();
 	
 	viewport = new Viewport( "canvas" );
+	viewport.position = {
+		x: 250,
+		y: 250
+	}
+	viewport.size = {
+		x: 100,
+		y: 100
+	}
 	
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
