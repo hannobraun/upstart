@@ -1,6 +1,7 @@
 
 var tick = 20;
 var rotationSpeed = 1;
+var acceleration = 10;
 
 var entityManager = null;
 
@@ -27,7 +28,7 @@ function init() {
 		y: 100
 	}
 	
-	inputSystem = new InputSystem( [ 37, 39 ] );
+	inputSystem = new InputSystem( [ 37, 38, 39 ] );
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
 	
@@ -79,17 +80,26 @@ function init() {
 
 function main() {
 	var pressedKeys = inputSystem.getPressedKeys();
-	var controlledByInput = entityManager.componentsByType( [ "rotation", "controlledByInput" ] );
+	var controlledByInput = entityManager.componentsByType( [ "speed", "rotation", "controlledByInput" ] );
 	for ( var i = 0; i < controlledByInput.entities.length; i++ ) {
 		var rotation = controlledByInput.components[ "rotation" ][ i ];
 		var newRotation = rotation;
 		if ( pressedKeys.indexOf( 37 ) != -1 ) {
-			var newRotation = rotation - rotationSpeed * tick / 1000;
+			newRotation = rotation - rotationSpeed * tick / 1000;
 		}
 		else if ( pressedKeys.indexOf( 39 ) != -1 ) {
-			var newRotation = rotation + rotationSpeed * tick / 1000;
+			newRotation = rotation + rotationSpeed * tick / 1000;
 		}
 		entityManager.addComponentToEntity( "rotation", newRotation, controlledByInput.entities[ i ] );
+		
+		var speed = controlledByInput.components[ "speed" ][ i ];
+		if ( pressedKeys.indexOf( 38 ) != -1 ) {
+			var accelerationScalar = acceleration * tick / 1000;
+			var accelerationVector = new Vector(
+					accelerationScalar * Math.sin( newRotation ),
+					accelerationScalar * -Math.cos( newRotation ) );
+			speed.replaceWith( speed.plus( accelerationVector ) );
+		}
 	}
 	
 	var positionAndGravitySource = entityManager.componentsByType( [ "position", "gravitySource" ] );
