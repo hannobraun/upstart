@@ -3,9 +3,10 @@ function RenderSystem() {}
 
 RenderSystem.prototype.render = function( viewport, positions, images ) {
 	viewport.clear();
-	viewport.saveState();
 
 	for ( var i = 0; i < positions.length; i++ ) {
+		viewport.saveState();
+		
 		var pos = positions[ i ];
 		var image = images[ i ];
 		
@@ -17,6 +18,7 @@ RenderSystem.prototype.render = function( viewport, positions, images ) {
 		viewport.scale( xScale, yScale );
 		
 		viewport.drawImage( image, x, y );
-		viewport.restoreState();		
+		
+		viewport.restoreState();
 	}
 }
