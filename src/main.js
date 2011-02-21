@@ -13,7 +13,7 @@ var renderSystem = null;
 function init() {
 	entityManager = new EntityManager();
 	
-	camera = new Camera( "canvas", 600, 600 );
+	camera = new Camera( "canvas" );
 	
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
