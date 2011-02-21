@@ -32,7 +32,8 @@ describe( "RenderSystem", function() {
 			drawImage: function() {},
 			saveState: function() {},
 			restoreState: function() {},
-			scale: function() {}
+			scale: function() {},
+			translate: function() {}
 		};
 	} );
 
@@ -45,11 +46,13 @@ describe( "RenderSystem", function() {
 	} );
 	
 	it( "should draw an image unscaled and at its actual position, if the viewport has default values.", function() {
+		spyOn( viewport, "translate" );
 		spyOn( viewport, "drawImage" );
 		
 		renderSystem.render( viewport, [ position ], [ appearance ] );
 		
-		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 10, 10 );
+		expect( viewport.translate ).toHaveBeenCalledWith( 10, 10 );
+		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 0, 0 );
 	} );
 	
 	it( "should translate an image's position before drawing it, if the viewport's position isn't at the origin", function() {
@@ -57,11 +60,26 @@ describe( "RenderSystem", function() {
 			x: 5,
 			y: 5
 		};
+		spyOn( viewport, "translate" );
 		spyOn( viewport, "drawImage" );
 		
 		renderSystem.render( viewport, [ position ], [ appearance ] );
 		
-		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 5, 5 );
+		expect( viewport.translate ).toHaveBeenCalledWith( 5, 5 );
+		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 0, 0 );
+	} );
+	
+	it( "should take the appearance's offset into account when drawing the image.", function() {
+		appearance.xOffset = 5;
+		appearance.yOffset = 5;
+		spyOn( viewport, "translate" );
+		spyOn( viewport, "drawImage" );
+		
+		renderSystem.render( viewport, [ position ], [ appearance ] );
+		
+		expect( viewport.translate ).toHaveBeenCalledWith( 10, 10 );
+		expect( viewport.translate ).toHaveBeenCalledWith( 5, 5 );
+		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 0, 0 );
 	} );
 	
 	it( "should scale an image before drawing it, if the viewport's size is smaller than then canvas it's rendered on.", function() {
@@ -78,16 +96,6 @@ describe( "RenderSystem", function() {
 		expect( viewport.scale ).toHaveBeenCalledWith( 2, 4 );
 		expect( viewport.saveState ).toHaveBeenCalled();
 		expect( viewport.restoreState ).toHaveBeenCalled();
-	} );
-	
-	it( "should take the appearance's offset into account when drawing the image.", function() {
-		appearance.xOffset = 5;
-		appearance.yOffset = 5;
-		spyOn( viewport, "drawImage" );
-		
-		renderSystem.render( viewport, [ position ], [ appearance ] );
-		
-		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 15, 15 );
 	} );
 	
 	it( "should take the scale of an image into account when drawing.", function() {
