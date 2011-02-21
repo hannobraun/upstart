@@ -3,7 +3,8 @@ var tick = 20;
 
 var entityManager = null;
 
-var viewport = null;
+var mainViewport = null;
+var zoomedViewport = null;
 
 var physicsSystem = null;
 var renderSystem = null;
@@ -13,14 +14,15 @@ var renderSystem = null;
 function init() {
 	entityManager = new EntityManager();
 	
-	viewport = new Viewport( "canvas" );
-	viewport.position = {
-		x: 200,
-		y: 200
+	mainViewport = new Viewport( "main" );
+	zoomedViewport = new Viewport( "zoomed" );
+	zoomedViewport.position = {
+		x: 250,
+		y: 250
 	}
-	viewport.size = {
-		x: 200,
-		y: 200
+	zoomedViewport.size = {
+		x: 100,
+		y: 100
 	}
 	
 	physicsSystem = new PhysicsSystem( tick );
@@ -72,7 +74,8 @@ function main() {
 	physicsSystem.integratePosition( positionsAndSpeeds.components[ "position" ], positionsAndSpeeds.components[ "speed" ] );
 	
 	var positionsAndImages = entityManager.componentsByType( [ "position", "appearance" ] );
-	renderSystem.render( viewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "appearance" ] );
+	renderSystem.render( mainViewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "appearance" ] );
+	renderSystem.render( zoomedViewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "appearance" ] );
 	
 	setTimeout( main, tick );
 }
