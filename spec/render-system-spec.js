@@ -9,7 +9,9 @@ describe( "RenderSystem", function() {
 	var appearance = {
 		image: {},
 		xOffset: 0,
-		yOffset: 0
+		yOffset: 0,
+		scaleX: 1,
+		scaleY: 1
 	}
 	
 	beforeEach( function() {
@@ -86,5 +88,15 @@ describe( "RenderSystem", function() {
 		renderSystem.render( viewport, [ position ], [ appearance ] );
 		
 		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 15, 15 );
+	} );
+	
+	it( "should take the scale of an image into account when drawing.", function() {
+		appearance.scaleX = 2;
+		appearance.scaleY = 3;
+		spyOn( viewport, "scale" );
+		
+		renderSystem.render( viewport, [ position ], [ appearance ] );
+		
+		expect( viewport.scale ).toHaveBeenCalledWith( 2, 3 );
 	} );
 } );

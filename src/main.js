@@ -36,7 +36,8 @@ function init() {
 		},
 		appearance: {
 			imagePath: "gfx/projectile.png",
-			scale: 1
+			scaleX: 1,
+			scaleY: 1
 		},
 		centeredOn: {}
 	} );
@@ -47,7 +48,8 @@ function init() {
 		},
 		appearance: {
 			imagePath: "gfx/black-hole.png",
-			scale: 1
+			scaleX: 1,
+			scaleY: 1
 		}
 	} );
 	
@@ -60,7 +62,8 @@ function init() {
 				image: image,
 				xOffset: -image.width / 2,
 				yOffset: -image.height / 2,
-				scale: appearances.components[ "appearance" ][ i ].scale
+				scaleX: appearances.components[ "appearance" ][ i ].scaleX,
+				scaleY: appearances.components[ "appearance" ][ i ].scaleY
 			}
 			entityManager.addComponentToEntity( "appearance", appearance, appearances.entities[ i ] );
 		}
