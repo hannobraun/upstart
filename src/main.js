@@ -34,7 +34,10 @@ function init() {
 		affectedByGravity: {
 			mass: 1
 		},
-		imagePath: "gfx/projectile.png",
+		appearance: {
+			imagePath: "gfx/projectile.png",
+			scale: 1
+		},
 		centeredOn: {}
 	} );
 	entityManager.defineEntity( "blackHole", {
@@ -42,19 +45,24 @@ function init() {
 		gravitySource: {
 			mass: 1000000000000000
 		},
-		imagePath: "gfx/black-hole.png"
+		appearance: {
+			imagePath: "gfx/black-hole.png",
+			scale: 1
+		}
 	} );
 	
-	var imagePaths = entityManager.componentsByType( [ "imagePath" ] );
-	loadImagesAndDo( imagePaths.components[ "imagePath" ], function( loadedImages ) {
-		for ( var i = 0; i < imagePaths.entities.length; i++ ) {
+	var appearances = entityManager.componentsByType( [ "appearance" ] );
+	var imagePaths = appearances.components[ "appearance" ].map( function( appearance ) { return appearance.imagePath } );
+	loadImagesAndDo( imagePaths, function( loadedImages ) {
+		for ( var i = 0; i < appearances.entities.length; i++ ) {
 			var image = loadedImages[ i ];
 			var appearance = {
 				image: image,
 				xOffset: -image.width / 2,
-				yOffset: -image.height / 2
+				yOffset: -image.height / 2,
+				scale: appearances.components[ "appearance" ][ i ].scale
 			}
-			entityManager.addComponentToEntity( "appearance", appearance, imagePaths.entities[ i ] );
+			entityManager.addComponentToEntity( "appearance", appearance, appearances.entities[ i ] );
 		}
 		main();
 	} );
