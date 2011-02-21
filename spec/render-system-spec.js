@@ -6,6 +6,7 @@ describe( "RenderSystem", function() {
 	var viewport = null;
 	
 	var position = new Vector( 10, 10 );
+	var rotation = 0;
 	var appearance = {
 		image: {},
 		xOffset: 0,
@@ -33,14 +34,15 @@ describe( "RenderSystem", function() {
 			saveState: function() {},
 			restoreState: function() {},
 			scale: function() {},
-			translate: function() {}
+			translate: function() {},
+			rotate: function() {}
 		};
 	} );
 
 	it( "should clear the viewport before drawing anything.", function() {
 		spyOn( viewport, "clear" );
 		
-		renderSystem.render( viewport, [ position ], [ appearance ] );
+		renderSystem.render( viewport, [ position ], [ rotation ], [ appearance ] );
 		
 		expect( viewport.clear ).toHaveBeenCalled();
 	} );
@@ -49,7 +51,7 @@ describe( "RenderSystem", function() {
 		spyOn( viewport, "translate" );
 		spyOn( viewport, "drawImage" );
 		
-		renderSystem.render( viewport, [ position ], [ appearance ] );
+		renderSystem.render( viewport, [ position ], [ rotation ], [ appearance ] );
 		
 		expect( viewport.translate ).toHaveBeenCalledWith( 10, 10 );
 		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 0, 0 );
@@ -63,7 +65,7 @@ describe( "RenderSystem", function() {
 		spyOn( viewport, "translate" );
 		spyOn( viewport, "drawImage" );
 		
-		renderSystem.render( viewport, [ position ], [ appearance ] );
+		renderSystem.render( viewport, [ position ], [ rotation ], [ appearance ] );
 		
 		expect( viewport.translate ).toHaveBeenCalledWith( 5, 5 );
 		expect( viewport.drawImage ).toHaveBeenCalledWith( appearance.image, 0, 0 );
@@ -75,7 +77,7 @@ describe( "RenderSystem", function() {
 		spyOn( viewport, "translate" );
 		spyOn( viewport, "drawImage" );
 		
-		renderSystem.render( viewport, [ position ], [ appearance ] );
+		renderSystem.render( viewport, [ position ], [ rotation ], [ appearance ] );
 		
 		expect( viewport.translate ).toHaveBeenCalledWith( 10, 10 );
 		expect( viewport.translate ).toHaveBeenCalledWith( 5, 5 );
@@ -91,7 +93,7 @@ describe( "RenderSystem", function() {
 		spyOn( viewport, "restoreState" );
 		spyOn( viewport, "scale" );
 		
-		renderSystem.render( viewport, [ position ], [ appearance ] );
+		renderSystem.render( viewport, [ position ], [ rotation ], [ appearance ] );
 		
 		expect( viewport.scale ).toHaveBeenCalledWith( 2, 4 );
 		expect( viewport.saveState ).toHaveBeenCalled();
@@ -103,8 +105,17 @@ describe( "RenderSystem", function() {
 		appearance.scaleY = 3;
 		spyOn( viewport, "scale" );
 		
-		renderSystem.render( viewport, [ position ], [ appearance ] );
+		renderSystem.render( viewport, [ position ], [ rotation ], [ appearance ] );
 		
 		expect( viewport.scale ).toHaveBeenCalledWith( 2, 3 );
+	} );
+	
+	it( "should take rotation into account when drawing an image.", function() {
+		rotation = 1;
+		spyOn( viewport, "rotate" );
+		
+		renderSystem.render( viewport, [ position ], [ rotation ], [ appearance ] );
+		
+		expect( viewport.rotate ).toHaveBeenCalledWith( 1 );
 	} );
 } );

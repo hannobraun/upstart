@@ -28,21 +28,23 @@ function init() {
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
 	
-	entityManager.defineEntity( "projectile", {
+	entityManager.defineEntity( "rocket", {
 		position: new Vector( 250, 250 ),
+		rotation: 0,
 		speed: new Vector( 15, -15 ),
 		affectedByGravity: {
 			mass: 1
 		},
 		appearance: {
-			imagePath: "gfx/projectile.png",
-			scaleX: 1,
-			scaleY: 1
+			imagePath: "gfx/rocket.png",
+			scaleX: 0.25,
+			scaleY: 0.25
 		},
 		centeredOn: {}
 	} );
 	entityManager.defineEntity( "blackHole", {
 		position: new Vector( 300, 300 ),
+		rotation: 0,
 		gravitySource: {
 			mass: 1000000000000000
 		},
@@ -96,9 +98,15 @@ function main() {
 		y: size
 	}
 	
-	var positionsAndImages = entityManager.componentsByType( [ "position", "appearance" ] );
-	renderSystem.render( mainViewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "appearance" ] );
-	renderSystem.render( zoomedViewport, positionsAndImages.components[ "position" ], positionsAndImages.components[ "appearance" ] );
+	var positionsAndImages = entityManager.componentsByType( [ "position", "rotation", "appearance" ] );
+	renderSystem.render( mainViewport,
+			positionsAndImages.components[ "position" ],
+			positionsAndImages.components[ "rotation" ],
+			positionsAndImages.components[ "appearance" ] );
+	renderSystem.render( zoomedViewport,
+			positionsAndImages.components[ "position" ],
+			positionsAndImages.components[ "rotation" ],
+			positionsAndImages.components[ "appearance" ] );
 	
 	setTimeout( main, tick );
 }

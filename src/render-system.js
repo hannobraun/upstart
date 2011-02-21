@@ -1,7 +1,7 @@
 
 function RenderSystem() {}
 
-RenderSystem.prototype.render = function( viewport, positions, appearances ) {
+RenderSystem.prototype.render = function( viewport, positions, rotations, appearances ) {
 	viewport.clear();
 	
 	viewport.saveState();
@@ -19,6 +19,8 @@ RenderSystem.prototype.render = function( viewport, positions, appearances ) {
 		var x = pos.x - viewport.position.x;
 		var y = pos.y - viewport.position.y;
 		viewport.translate( x, y );
+		
+		viewport.rotate( rotations[ i ] );
 		
 		viewport.scale( appearance.scaleX, appearance.scaleY );
 		viewport.translate( appearance.xOffset, appearance.yOffset );
