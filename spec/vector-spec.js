@@ -11,6 +11,15 @@ describe( "Vector", function() {
 		expect( vector.y ).toEqual( y );
 	} );
 	
+	it( "should replace itself with another vector.", function() {
+		var originalVector = new Vector( 1, 2 );
+		var replacingVector = new Vector( 4, 3 );
+		
+		originalVector.replaceWith( replacingVector );
+		
+		expect( originalVector ).toEqual( replacingVector );
+	} );
+	
 	it( "should add another vector.", function() {
 		var vector1 = new Vector( 1, 2 );
 		var vector2 = new Vector( 2, 1 );

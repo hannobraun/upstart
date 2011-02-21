@@ -4,6 +4,11 @@ function Vector( x, y ) {
 	this.y = y;
 }
 
+Vector.prototype.replaceWith = function( other ) {
+	this.x = other.x;
+	this.y = other.y;
+}
+
 Vector.prototype.plus = function( other ) {
 	return new Vector( this.x + other.x, this.y + other.y );
 }
