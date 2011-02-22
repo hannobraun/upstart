@@ -5,3 +5,4 @@ TODO
 * Several places in the code use two variables xVar and yVar instead of a single vector. This should be changed.
 * Write mock canvas that saves calls and can be queried as to where images have been drawn.
 * Create ComponentProcessor.withParameter (singular), which does the same as withParameters.
+* ComponentProcessor.using should also accept a Function object and call it directly.
