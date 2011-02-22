@@ -82,8 +82,9 @@ function init() {
 
 function main() {
 	var pressedKeys = inputSystem.getPressedKeys();
-	var controlledByInput = entityManager.componentsByType( [ "speed", "rotation", "controlledByInput" ] );
-	inputSystem.processComponents( pressedKeys, controlledByInput );
+	entityManager.updateComponents( "speed", "rotation", "controlledByInput" )
+			.withParameters( pressedKeys )
+			.using( inputSystem );
 	
 	entityManager.processComponents( "position", "gravitySource" )
 			.and( "position", "speed", "affectedByGravity" )

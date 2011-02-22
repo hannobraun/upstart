@@ -26,9 +26,9 @@ InputSystem.prototype.getPressedKeys = function() {
 	return this.pressedKeys;
 }
 
-InputSystem.prototype.processComponents = function( pressedKeys, controlledByInput ) {
-	for ( var i = 0; i < controlledByInput.entities.length; i++ ) {
-		var rotation = controlledByInput.components[ "rotation" ][ i ];
+InputSystem.prototype.updateComponents = function( pressedKeys, speeds, rotations, controlledByInputs ) {
+	for ( var i = 0; i < speeds.length; i++ ) {
+		var rotation = rotations[ i ];
 		var newRotation = rotation;
 		if ( pressedKeys.indexOf( 37 ) != -1 ) {
 			newRotation = rotation - rotationSpeed * tick / 1000;
@@ -36,9 +36,9 @@ InputSystem.prototype.processComponents = function( pressedKeys, controlledByInp
 		else if ( pressedKeys.indexOf( 39 ) != -1 ) {
 			newRotation = rotation + rotationSpeed * tick / 1000;
 		}
-		entityManager.addComponentToEntity( "rotation", newRotation, controlledByInput.entities[ i ] );
+		rotations[ i ] = newRotation;
 		
-		var speed = controlledByInput.components[ "speed" ][ i ];
+		var speed = speeds[ i ];
 		if ( pressedKeys.indexOf( 38 ) != -1 ) {
 			var accelerationScalar = acceleration * tick / 1000;
 			var accelerationVector = new Vector(
@@ -47,4 +47,6 @@ InputSystem.prototype.processComponents = function( pressedKeys, controlledByInp
 			speed.replaceWith( speed.plus( accelerationVector ) );
 		}
 	}
+	
+	return [ speeds, rotations, controlledByInputs ];
 }
