@@ -83,26 +83,7 @@ function init() {
 function main() {
 	var pressedKeys = inputSystem.getPressedKeys();
 	var controlledByInput = entityManager.componentsByType( [ "speed", "rotation", "controlledByInput" ] );
-	for ( var i = 0; i < controlledByInput.entities.length; i++ ) {
-		var rotation = controlledByInput.components[ "rotation" ][ i ];
-		var newRotation = rotation;
-		if ( pressedKeys.indexOf( 37 ) != -1 ) {
-			newRotation = rotation - rotationSpeed * tick / 1000;
-		}
-		else if ( pressedKeys.indexOf( 39 ) != -1 ) {
-			newRotation = rotation + rotationSpeed * tick / 1000;
-		}
-		entityManager.addComponentToEntity( "rotation", newRotation, controlledByInput.entities[ i ] );
-		
-		var speed = controlledByInput.components[ "speed" ][ i ];
-		if ( pressedKeys.indexOf( 38 ) != -1 ) {
-			var accelerationScalar = acceleration * tick / 1000;
-			var accelerationVector = new Vector(
-					accelerationScalar * Math.sin( newRotation ),
-					accelerationScalar * -Math.cos( newRotation ) );
-			speed.replaceWith( speed.plus( accelerationVector ) );
-		}
-	}
+	inputSystem.processComponents( pressedKeys, controlledByInput );
 	
 	entityManager.processComponents( "position", "gravitySource" )
 			.and( "position", "speed", "affectedByGravity" )
