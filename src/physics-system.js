@@ -12,7 +12,7 @@ PhysicsSystem.prototype.integratePosition = function( positions, speeds ) {
 	}
 }
 
-PhysicsSystem.prototype.integrateSpeed = function(
+PhysicsSystem.prototype.processComponents = function(
 	gravitySourcePositions,
 	gravitySourceComponents,
 	affectedByGravityPositions,

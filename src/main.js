@@ -102,15 +102,10 @@ function main() {
 		}
 	}
 	
-	var positionAndGravitySource = entityManager.componentsByType( [ "position", "gravitySource" ] );
-	var positionAndSpeedAndAffectedByGravity = entityManager.componentsByType( [ "position", "speed", "affectedByGravity" ] );
-	physicsSystem.integrateSpeed(
-		positionAndGravitySource.components[ "position" ],
-		positionAndGravitySource.components[ "gravitySource" ],
-		positionAndSpeedAndAffectedByGravity.components[ "position" ],
-		positionAndSpeedAndAffectedByGravity.components[ "speed" ],
-		positionAndSpeedAndAffectedByGravity.components[ "affectedByGravity" ]
-	);
+	entityManager
+			.processComponents( "position", "gravitySource" )
+			.and( "position", "speed", "affectedByGravity" )
+			.using( physicsSystem );
 
 	var positionsAndSpeeds = entityManager.componentsByType( [ "position", "speed" ] );
 	physicsSystem.integratePosition( positionsAndSpeeds.components[ "position" ], positionsAndSpeeds.components[ "speed" ] );
