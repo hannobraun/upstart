@@ -3,3 +3,5 @@ TODO
 
 * Find out how Jasmine generates debug output and override whatever's necessary to display vectors as (x, y).
 * Several places in the code use two variables xVar and yVar instead of a single vector. This should be changed.
+* Write mock canvas that saves calls and can be queried as to where images have been drawn.
+* Create ComponentProcessor.withParameter (singular), which does the same as withParameters.
