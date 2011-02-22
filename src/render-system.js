@@ -1,7 +1,7 @@
 
 function RenderSystem() {}
 
-RenderSystem.prototype.render = function( viewport, positions, rotations, appearances ) {
+RenderSystem.prototype.processComponents = function( viewport, positions, rotations, appearances ) {
 	viewport.clear();
 	
 	viewport.saveState();

@@ -121,15 +121,13 @@ function main() {
 		y: size
 	}
 	
-	var positionsAndImages = entityManager.componentsByType( [ "position", "rotation", "appearance" ] );
-	renderSystem.render( mainViewport,
-			positionsAndImages.components[ "position" ],
-			positionsAndImages.components[ "rotation" ],
-			positionsAndImages.components[ "appearance" ] );
-	renderSystem.render( zoomedViewport,
-			positionsAndImages.components[ "position" ],
-			positionsAndImages.components[ "rotation" ],
-			positionsAndImages.components[ "appearance" ] );
+	entityManager.processComponents( "position", "rotation", "appearance" )
+			.withParameters( mainViewport )
+			.using( renderSystem );
+			
+	entityManager.processComponents( "position", "rotation", "appearance" )
+			.withParameters( zoomedViewport )
+			.using( renderSystem );
 	
 	setTimeout( main, tick );
 }
