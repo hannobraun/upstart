@@ -8,6 +8,7 @@ var entityManager = null;
 var mainViewport = null;
 var zoomedViewport = null;
 
+var gravityProcessor = null;
 var inputSystem = null;
 var physicsSystem = null;
 var renderSystem = null;
@@ -28,6 +29,7 @@ function init() {
 		y: 100
 	}
 	
+	gravityProcessor = new GravityProcessor( tick );
 	inputSystem = new InputSystem( [ 37, 38, 39 ] );
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
@@ -102,10 +104,9 @@ function main() {
 		}
 	}
 	
-	entityManager
-			.processComponents( "position", "gravitySource" )
+	entityManager.processComponents( "position", "gravitySource" )
 			.and( "position", "speed", "affectedByGravity" )
-			.using( physicsSystem );
+			.using( gravityProcessor );
 
 	var positionsAndSpeeds = entityManager.componentsByType( [ "position", "speed" ] );
 	physicsSystem.integratePosition( positionsAndSpeeds.components[ "position" ], positionsAndSpeeds.components[ "speed" ] );
