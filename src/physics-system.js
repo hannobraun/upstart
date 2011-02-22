@@ -3,7 +3,7 @@ function PhysicsSystem( tick ) {
 	this.tick = tick;
 }
 
-PhysicsSystem.prototype.integratePosition = function( positions, speeds ) {
+PhysicsSystem.prototype.processComponents = function( positions, speeds ) {
 	for ( var i = 0; i < positions.length; i++ ) {
 		var position = positions[ i ];
 		var speed = speeds[ i ];

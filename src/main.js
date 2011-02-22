@@ -107,9 +107,8 @@ function main() {
 	entityManager.processComponents( "position", "gravitySource" )
 			.and( "position", "speed", "affectedByGravity" )
 			.using( gravityProcessor );
-
-	var positionsAndSpeeds = entityManager.componentsByType( [ "position", "speed" ] );
-	physicsSystem.integratePosition( positionsAndSpeeds.components[ "position" ], positionsAndSpeeds.components[ "speed" ] );
+	
+	entityManager.processComponents( "position", "speed" ).using( physicsSystem );
 	
 	var center = entityManager.componentsByType( [ "position", "centeredOn" ] ).components[ "position" ][ 0 ];
 	var size = 80;

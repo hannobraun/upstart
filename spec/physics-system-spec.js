@@ -12,7 +12,7 @@ describe( "PhysicsSystem", function() {
 		var position = new Vector( 0, 0 );
 		var speed = new Vector( 1000, 1000 );
 		
-		physicsSystem.integratePosition( [ position ], [ speed ] );
+		physicsSystem.processComponents( [ position ], [ speed ] );
 		
 		expect( position ).toEqual( new Vector( 20, 20 ) );
 	} );
