@@ -34,7 +34,7 @@ function init() {
 	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
 	
-	entityManager.defineEntity( "rocket", {
+	entityManager.createEntity( {
 		position: new Vector( 250, 250 ),
 		rotation: 0,
 		speed: new Vector( 15, -15 ),
@@ -49,7 +49,7 @@ function init() {
 		centeredOn: {},
 		controlledByInput: {}
 	} );
-	entityManager.defineEntity( "blackHole", {
+	entityManager.createEntity( {
 		position: new Vector( 300, 300 ),
 		rotation: 0,
 		gravitySource: {
@@ -82,6 +82,7 @@ function init() {
 
 function main() {
 	var pressedKeys = inputSystem.getPressedKeys();
+	
 	entityManager.updateComponents( "speed", "rotation", "controlledByInput" )
 			.withParameters( pressedKeys )
 			.using( inputSystem );
