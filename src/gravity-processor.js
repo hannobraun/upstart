@@ -7,7 +7,7 @@ GravityProcessor.prototype.processComponents = function(
 	gravitySourcePositions,
 	gravitySourceComponents,
 	affectedByGravityPositions,
-	affectedByGravitySpeeds,
+	affectedByGravityAccelerations,
 	affectedByGravityComponents
 ) {
 	for ( var i = 0; i < gravitySourcePositions.length; i++ ) {
@@ -24,11 +24,11 @@ GravityProcessor.prototype.processComponents = function(
 			var force = g * m1 * m2 / dSquared;
 			var forceVector = distanceVector.toUnitVector().times( force );
 			
-			var speed = affectedByGravitySpeeds[ j ];
-			var addedSpeed = forceVector.dividedBy( m2 ).times( this.tick ).dividedBy( 1000 );
-			var newSpeed =  speed.plus( addedSpeed );
+			var acceleration = affectedByGravityAccelerations[ j ];
+			var addedAcceleration = forceVector.dividedBy( m2 );
+			var newAcceleration = acceleration.plus( addedAcceleration );
 			
-			speed.replaceWith( newSpeed );
+			acceleration.replaceWith( newAcceleration );
 		}
 	}
 }

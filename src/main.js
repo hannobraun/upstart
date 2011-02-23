@@ -89,7 +89,7 @@ function main() {
 			.using( inputSystem );
 	
 	entityManager.processComponents( "position", "gravitySource" )
-			.and( "position", "speed", "affectedByGravity" )
+			.and( "position", "acceleration", "affectedByGravity" )
 			.using( gravityProcessor );
 	
 	entityManager.updateComponents( "position", "speed", "acceleration" )
