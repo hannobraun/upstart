@@ -85,7 +85,7 @@ function main() {
 	var pressedKeys = inputSystem.getPressedKeys();
 	
 	entityManager.updateComponents( "acceleration", "rotation", "controlledByInput" )
-			.withParameters( pressedKeys )
+			.withParameter( pressedKeys )
 			.using( inputSystem );
 	
 	entityManager.processComponents( "position", "gravitySource" )
@@ -93,7 +93,7 @@ function main() {
 			.using( gravityProcessor );
 	
 	entityManager.updateComponents( "position", "speed", "acceleration" )
-			.withParameters( tick )
+			.withParameter( tick )
 			.using( eulerIntegrator );
 	
 	var center = entityManager.componentsByType( [ "position", "centeredOn" ] ).components[ "position" ][ 0 ];
@@ -108,11 +108,11 @@ function main() {
 	}
 	
 	entityManager.processComponents( "position", "rotation", "appearance" )
-			.withParameters( mainViewport )
+			.withParameter( mainViewport )
 			.using( renderSystem );
 			
 	entityManager.processComponents( "position", "rotation", "appearance" )
-			.withParameters( zoomedViewport )
+			.withParameter( zoomedViewport )
 			.using( renderSystem );
 	
 	setTimeout( main, tick );
