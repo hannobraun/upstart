@@ -1,8 +1,9 @@
 
-function InputSystem( keysOfInterest ) {
-	var self = this;
-	
+function InputSystem( keysOfInterest, acceleration ) {
+	this.acceleration = acceleration;
 	this.pressedKeys = [];
+	
+	var self = this;
 	
 	window.addEventListener( "keydown",
 			function( event ) {
@@ -26,8 +27,8 @@ InputSystem.prototype.getPressedKeys = function() {
 	return this.pressedKeys;
 }
 
-InputSystem.prototype.updateComponents = function( pressedKeys, speeds, rotations, controlledByInputs ) {
-	for ( var i = 0; i < speeds.length; i++ ) {
+InputSystem.prototype.updateComponents = function( pressedKeys, accelerations, rotations, controlledByInputs ) {
+	for ( var i = 0; i < accelerations.length; i++ ) {
 		var rotation = rotations[ i ];
 		var newRotation = rotation;
 		if ( pressedKeys.indexOf( 37 ) != -1 ) {
@@ -38,15 +39,15 @@ InputSystem.prototype.updateComponents = function( pressedKeys, speeds, rotation
 		}
 		rotations[ i ] = newRotation;
 		
-		var speed = speeds[ i ];
+		var acceleration = accelerations[ i ];
 		if ( pressedKeys.indexOf( 38 ) != -1 ) {
-			var accelerationScalar = acceleration * tick / 1000;
 			var accelerationVector = new Vector(
-					accelerationScalar * Math.sin( newRotation ),
-					accelerationScalar * -Math.cos( newRotation ) );
-			speed.replaceWith( speed.plus( accelerationVector ) );
+					this.acceleration * Math.sin( newRotation ),
+					this.acceleration * -Math.cos( newRotation ) );
+			acceleration = acceleration.plus( accelerationVector );
 		}
+		accelerations[ i ] = acceleration;
 	}
 	
-	return [ speeds, rotations, controlledByInputs ];
+	return [ accelerations, rotations, controlledByInputs ];
 }

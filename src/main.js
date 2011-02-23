@@ -31,7 +31,7 @@ function init() {
 	
 	eulerIntegrator = new EulerIntegrator();
 	gravityProcessor = new GravityProcessor( tick );
-	inputSystem = new InputSystem( [ 37, 38, 39 ] );
+	inputSystem = new InputSystem( [ 37, 38, 39 ], acceleration );
 	renderSystem = new RenderSystem();
 	
 	entityManager.createEntity( {
@@ -84,7 +84,7 @@ function init() {
 function main() {
 	var pressedKeys = inputSystem.getPressedKeys();
 	
-	entityManager.updateComponents( "speed", "rotation", "controlledByInput" )
+	entityManager.updateComponents( "acceleration", "rotation", "controlledByInput" )
 			.withParameters( pressedKeys )
 			.using( inputSystem );
 	
