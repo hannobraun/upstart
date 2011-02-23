@@ -8,6 +8,7 @@ var entityManager = null;
 var mainViewport = null;
 var zoomedViewport = null;
 
+var eulerIntegrator = null;
 var gravityProcessor = null;
 var inputSystem = null;
 var physicsSystem = null;
@@ -29,6 +30,7 @@ function init() {
 		y: 100
 	}
 	
+	eulerIntegrator = new EulerIntegrator();
 	gravityProcessor = new GravityProcessor( tick );
 	inputSystem = new InputSystem( [ 37, 38, 39 ] );
 	physicsSystem = new PhysicsSystem( tick );
@@ -36,8 +38,9 @@ function init() {
 	
 	entityManager.createEntity( {
 		position: new Vector( 250, 250 ),
-		rotation: 0,
 		speed: new Vector( 15, -15 ),
+		acceleration: new Vector( 0, 0 ),
+		rotation: 0,
 		affectedByGravity: {
 			mass: 1
 		},
@@ -91,7 +94,9 @@ function main() {
 			.and( "position", "speed", "affectedByGravity" )
 			.using( gravityProcessor );
 	
-	entityManager.processComponents( "position", "speed" ).using( physicsSystem );
+	entityManager.updateComponents( "position", "speed", "acceleration" )
+			.withParameters( tick )
+			.using( eulerIntegrator );
 	
 	var center = entityManager.componentsByType( [ "position", "centeredOn" ] ).components[ "position" ][ 0 ];
 	var size = 80;
