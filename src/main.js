@@ -11,7 +11,6 @@ var zoomedViewport = null;
 var eulerIntegrator = null;
 var gravityProcessor = null;
 var inputSystem = null;
-var physicsSystem = null;
 var renderSystem = null;
 
 
@@ -33,7 +32,6 @@ function init() {
 	eulerIntegrator = new EulerIntegrator();
 	gravityProcessor = new GravityProcessor( tick );
 	inputSystem = new InputSystem( [ 37, 38, 39 ] );
-	physicsSystem = new PhysicsSystem( tick );
 	renderSystem = new RenderSystem();
 	
 	entityManager.createEntity( {
