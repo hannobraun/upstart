@@ -118,6 +118,8 @@ ComponentProcessor.prototype.withParameters = function() {
 	return this;
 }
 
+ComponentProcessor.prototype.withParameter = ComponentProcessor.prototype.withParameters;
+
 ComponentProcessor.prototype.and = function() {
 	var additionalComponents = this.entities.components( arguments );
 	this.components = this.components.concat( additionalComponents );

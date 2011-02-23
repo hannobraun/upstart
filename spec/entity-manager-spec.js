@@ -61,6 +61,16 @@ describe( "EntityManager", function() {
 		
 			expect( exampleSystem.processComponents ).toHaveBeenCalledWith( p1, p2, [ a1, a2 ], [ b1, b2 ] );
 		} );
+		
+		it( "should provide a function that reads better when passing in single parameters.", function() {
+			var p1 = "p1";
+			
+			entityManager.processComponents( "a", "b" )
+					.withParameter( p1 )
+					.using( exampleSystem );
+			
+			expect( exampleSystem.processComponents ).toHaveBeenCalledWith( p1, [ a1, a2 ], [ b1, b2 ] );
+		} );
 	
 		it( "should pass several sets of components to a system.", function() {
 			entityManager.processComponents( "a", "b" )
